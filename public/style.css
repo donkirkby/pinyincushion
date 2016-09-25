@@ -1,84 +1,32 @@
+html, body {
+  height: 100%;
+}
 
+div#pinyin-cushion-app {
+  height: 100%;
+}
 
-/* /\* styles *\/ */
-/* /\* called by your view template *\/ */
+div.pinyin-cushion-editor {
+  height: 100%;
+}
 
-/* /\* You might want to try something fancier: *\/ */
-/* /\* less: http://lesscss.org/ *\/ */
+div.left-container, div.right-container {
+  height: 100%;
+}
 
-/* * { */
-/*   box-sizing: border-box; */
-/* } */
+div.input-box {
+  height: 100%;
+}
 
-/* body { */
-/*   font-family: helvetica, arial, sans-serif; */
-/*   margin: 25px; */
-/* } */
+div.input-box textarea {
+  height: 90%;
+}
 
-/* h1 { */
-/*   font-weight: bold; */
-/*   color: pink; */
-/* } */
+div.display-box {
+  font-size: 250%;
+  height: 70%;
+}
 
-/* .bold { */
-/*   font-weight: bold; */
-/* } */
-
-/* p { */
-/*   max-width: 600px; */
-/* } */
-
-/* form { */
-/*   margin-bottom: 25px; */
-/*   padding: 15px; */
-/*   background-color: cyan; */
-/*   display: inline-block; */
-/*   width: 100%; */
-/*   max-width: 340px; */
-/*   border-radius: 3px; */
-/* } */
-
-/* input { */
-/*   display: block; */
-/*   margin-bottom: 10px; */
-/*   padding: 5px; */
-/*   width: 100%; */
-/*   border: 1px solid lightgrey; */
-/*   border-radius: 3px; */
-/*   font-size: 16px; */
-/* } */
-
-/* button { */
-/*   font-size: 16px; */
-/*   border-radius: 3px; */
-/*   background-color: lightgrey; */
-/*   border: 1px solid grey; */
-/*   box-shadow: 2px 2px teal; */
-/*   cursor: pointer; */
-/* } */
-
-/* button:hover { */
-/*   background-color: yellow; */
-/* } */
-
-/* button:active { */
-/*   box-shadow: none; */
-/* } */
-
-/* li { */
-/*   margin-bottom: 5px; */
-/* } */
-
-/* footer { */
-/*   margin-top: 50px; */
-/*   padding-top: 25px; */
-/*   border-top: 1px solid lightgrey; */
-/* } */
-
-/* footer > a { */
-/*   color: #BBBBBB; */
-/* } */
-
-/* .nicejob { */
-/*   text-decoration: line-through; */
-/* } */
+div.feedback-box {
+  height: 20%;
+}
