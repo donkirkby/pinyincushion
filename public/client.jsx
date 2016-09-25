@@ -3,7 +3,8 @@
 
 "use strict";
 
-var DisplayBox = React.createClass({
+
+const DisplayBox = React.createClass({
   generateRubyHtml: function() {
     // console.log('children:', this.props.children);
     // console.log('text:', this.props.text);
