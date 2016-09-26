@@ -1,25 +1,27 @@
-Welcome to the HyperDev BETA
-============================
+# Pinyin Cushion
 
-Click `"Show"` in the header to see your app live. Updates to your code will instantly deploy and update live.
+## Setup
 
-HyperDev is a developer playground that lets you code a real web-app without the slow setup and deployment steps. 
+The development setup is adopted from
+[create-react-app](https://github.com/facebookincubator/create-react-app).
 
+```
+npm install
+```
 
-Your Project
-------------
+## Run server
 
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env`
+```
+npm start
+```
 
-On the front-end,
-- edit `client.js`, `style.css` and `index.html`
-- drag in `assets`, like images or music, to add them to your project
+## Build
 
+```
+npm run build
+```
 
-Made by Fog Creek
------------------
-
-\ ゜o゜)ノ
+## Test
+```
+npm run test
+```

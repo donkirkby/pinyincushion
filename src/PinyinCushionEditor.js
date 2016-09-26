@@ -1,7 +1,8 @@
-// client-side js
-// run by the browser each time your view template is loaded
+import React from 'react';
+import './PinyinCushionEditor.css';
+// import logo from './logo.svg';
 
-"use strict";
+import pronunciation from './pronunciation';
 
 
 const DisplayBox = React.createClass({
@@ -9,12 +10,12 @@ const DisplayBox = React.createClass({
     // console.log('children:', this.props.children);
     // console.log('text:', this.props.text);
     
-    var html = ''
+    var html = '';
     for (var i = 0; i < this.props.text.length; i++) {
       var char = this.props.text.charAt(i);
       var pinyin = pronunciation.getPinyin(char);
       // TODO: replace this with DOM or proper escaping.
-      html += '<ruby class="text-primary">' + char + '<rt class="text-success">' +  pinyin + '</rt>' + '</ruby>';
+      html += '<ruby class="text-primary">' + char + '<rt class="text-success">' +  pinyin + '</rt></ruby>';
     }
     return { __html: html};
   },
@@ -57,9 +58,9 @@ var CharacterFrequency = React.createClass({
         <span className="text-primary">{this.props.character}</span>:&nbsp;
         <span className="text-success">{this.props.frequency}</span>
       </div>
-    )
+    );
   }
-})
+});
 
 var CharacterFrequencyList = React.createClass({
   computeCharacterFrequency: function() {
@@ -135,6 +136,4 @@ var PinyinCushionEditor = React.createClass({
   }
 });
 
-
-
-ReactDOM.render(<PinyinCushionEditor />, document.getElementById('pinyin-cushion-app'));
+export default PinyinCushionEditor;
