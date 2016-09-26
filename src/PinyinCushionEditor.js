@@ -1,8 +1,11 @@
 import React from 'react';
-import './PinyinCushionEditor.css';
+import punycode from 'punycode';
+
 // import logo from './logo.svg';
 
 import pronunciation from './pronunciation';
+
+import './PinyinCushionEditor.css';
 
 
 const DisplayBox = React.createClass({
@@ -40,7 +43,8 @@ const DisplayBox = React.createClass({
 
 const FeedbackBox = React.createClass({
     computeNumberOfCharacters: function() {
-        return this.props.text.length;
+        // http://speakingjs.com/es5/ch24.html
+        return punycode.ucs2.decode(this.props.text).length;
     },
 
     render: function() {
