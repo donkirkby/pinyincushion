@@ -11,8 +11,7 @@ const DisplayBox = React.createClass({
         // console.log('text:', this.props.text);
 
         let html = '';
-        for (let i = 0; i < this.props.text.length; i++) {
-            let char = this.props.text.charAt(i);
+        for (let char of this.props.text) {
             let pinyin = pronunciation.getPinyin(char);
             // TODO: replace this with DOM or proper escaping.
             html += '<ruby class="text-primary">' + char + '<rt class="text-success">' +  pinyin + '</rt></ruby>';
@@ -67,8 +66,7 @@ const CharacterFrequency = React.createClass({
 const CharacterFrequencyList = React.createClass({
     computeCharacterFrequency: function() {
         let counts = {};
-        for (let i = 0; i < this.props.text.length; i++) {
-            let char = this.props.text.charAt(i);
+        for (let char of this.props.text) {
             counts[char] = counts[char] ? counts[char]+1 : 1;
         }
         return counts;
