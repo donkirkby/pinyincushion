@@ -1,0 +1,30 @@
+.pinyin-cushion-editor {
+  height: 100%;
+}
+
+.left-container, .right-container {
+  height: 100%;
+}
+
+.input-box {
+  height: 100%;
+}
+
+.input-box textarea {
+  height: 90%;
+}
+
+.display-box {
+  font-size: 250%;
+  height: 70%;
+  overflow: scroll;
+}
+
+.character-frequency-list {
+  overflow: scroll;
+  max-height: 85%;
+}
+
+.feedback-box {
+  height: 20%;
+}
