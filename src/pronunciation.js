@@ -15,4 +15,5 @@ var pronunciation = (function() {
   return my;
 }());
 
-module.exports = pronunciation;
+
+export default pronunciation;
