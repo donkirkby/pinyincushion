@@ -20,7 +20,7 @@ const DisplayBox = React.createClass({
             html += '<ruby class="text-primary">'
                 + char
                 + '<rp>(</rp><rt class="text-success">'
-                + pinyin
+                + pinyin.toLowerCase()
                 + '</rt><rp>)</rp></ruby>';
         }
         return { __html: html};
