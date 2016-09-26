@@ -25,6 +25,12 @@ div.input-box textarea {
 div.display-box {
   font-size: 250%;
   height: 70%;
+  overflow: scroll;
+}
+
+div.character-frequency-list {
+  overflow: scroll;
+  max-height: 85%;
 }
 
 div.feedback-box {

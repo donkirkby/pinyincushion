@@ -8,6 +8,7 @@ var pronunciation = (function() {
     }
     return pinyin;
   };
+  
   // parsed from https://sourceforge.net/p/zdt/svn/HEAD/tree/tags/0.7.0b3/net.sourceforge.zdt.cedict/cedict.script
   var chars = {
 "○":"ling2","〇":"ling2","㐄":"kua4","㐅":"wu3","㐆":"yin3","㐌":"ta1",
@@ -1676,6 +1677,6 @@ var pronunciation = (function() {
 "餪":"nuan3","餫":"hun2","餮":"tie4","餯":"hui4","糇":"hou2","餲":"he2",
 "饧":"xing2","餸":"song4","糖":"tang2","馎":"bo2","糕":"gao1","饩":"xi4",
 "馈":"kui4","馏":"liu2","馊":"sou1","馌":"ye4","馍":"mo2","饄":"tang2"
-  };
+};
   return my;
 }());
