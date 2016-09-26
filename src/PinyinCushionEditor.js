@@ -14,7 +14,11 @@ const DisplayBox = React.createClass({
         for (let char of this.props.text) {
             let pinyin = pronunciation.getPinyin(char);
             // TODO: replace this with DOM or proper escaping.
-            html += '<ruby class="text-primary">' + char + '<rt class="text-success">' +  pinyin + '</rt></ruby>';
+            html += '<ruby class="text-primary">'
+                + char
+                + '<rp>(</rp><rt class="text-success">'
+                + pinyin
+                + '</rt><rp>)</rp></ruby>';
         }
         return { __html: html};
     },
