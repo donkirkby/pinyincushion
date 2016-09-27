@@ -2,19 +2,17 @@
 import chars from './charData.json';
 
 
-var charData = (function() {
-    var my = {};
-
-    my.getPinyin = function(char) {
+var charData = {
+    getPinyin: function(char) {
         var props = chars[char];
         if (props === undefined) {
             return "";
         } else {
             return props.pinyin;
         }
-    };
+    },
 
-    my.getFreqRank = function(char) {
+    getFreqRank: function(char) {
         var props = chars[char];
         if (props === undefined) {
             // return any large number to indicate it's a rarely used char
@@ -22,10 +20,8 @@ var charData = (function() {
         } else {
             return props.freqRank;
         }
-    };
-
-    return my;
-}());
+    }
+};
 
 
 export default charData;
