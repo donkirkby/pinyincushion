@@ -15,7 +15,7 @@ class FreqRankLegend extends React.Component {
                 Top: &nbsp;
                 <span className="bg-primary">100</span>
                 <span className="bg-success">200</span>
-                <span className="bg-info">5000</span>
+                <span className="bg-info">500</span>
                 <span className="bg-warning">2000</span>
                 <span className="bg-danger">5000</span>
                 </div>
