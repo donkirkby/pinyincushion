@@ -1,30 +1,47 @@
 .pinyin-cushion-editor {
-  height: 100%;
+    height: 100%;
 }
 
 .left-container, .right-container {
-  height: 100%;
+    height: 100%;
 }
 
 .input-box {
-  height: 100%;
+    height: 100%;
 }
 
 .input-box textarea {
-  height: 90%;
+    height: 90%;
+}
+
+.freq-rank-legend {
+    vertical-align: bottom;
+    display: inline-block;
+}
+
+.freq-rank-legend span {
+    width: 50px;
+    text-align: center;
+    display: inline-block;
 }
 
 .display-box {
-  font-size: 250%;
-  height: 70%;
-  overflow: scroll;
+    height: 70%;
 }
 
+.display-box .display {
+    margin-bottom: 15px;
+    font-size: 250%;
+    height: 90%;
+    overflow: scroll;
+}
+
+
 .character-frequency-list {
-  overflow: scroll;
-  max-height: 85%;
+    overflow: scroll;
+    max-height: 85%;
 }
 
 .feedback-box {
-  height: 20%;
+    height: 20%;
 }
