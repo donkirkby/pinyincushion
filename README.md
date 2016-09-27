@@ -8,6 +8,8 @@ The development setup is adopted from
 [create-react-app](https://github.com/facebookincubator/create-react-app).
 
 ```
+git clone git@github.com:donkirkby/pinyincushion.git
+cd pinyincushion
 npm install
 ```
 
