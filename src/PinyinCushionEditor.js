@@ -36,12 +36,18 @@ const DisplayBox = React.createClass({
             let freqRank = charData.getFreqRank(char);
             let bgColorClassName = this.computeBgColorClassName(freqRank);
 
-            // TODO: replace this with DOM or proper escaping.
-            html += '<ruby class="' + bgColorClassName + '">'
-                + char
-                + '<rp>(</rp><rt class="text-success">'
-                + pinyin.toLowerCase()
-                + '</rt><rp>)</rp></ruby>';
+            if (char === ' ') {
+                html += '&nbsp;';
+            } else if (char === '\n') {
+                html += '<br>';
+            } else {
+                // TODO: replace this with DOM or proper escaping.
+                html += '<ruby class="' + bgColorClassName + '">'
+                    + char
+                    + '<rp>(</rp><rt class="text-success">'
+                    + pinyin.toLowerCase()
+                    + '</rt><rp>)</rp></ruby>';
+            }
         }
         return { __html: html};
     },
