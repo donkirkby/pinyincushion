@@ -3,21 +3,41 @@ import punycode from 'punycode';
 
 // import logo from './logo.svg';
 
-import pronunciation from './pronunciation';
+import charData from './charData';
 
 import './PinyinCushionEditor.css';
 
 
 const DisplayBox = React.createClass({
+    computeBgColorClassName: function(freqRank) {
+        if (freqRank <= 100) {
+            return 'bg-primary';
+        } else if (freqRank <= 200) {
+            return 'bg-success';
+        } else if (freqRank <= 500) {
+            return 'bg-info';
+        } else if (freqRank <= 2000) {
+            return 'bg-warning';
+        } else if (freqRank <= 5000) {
+            return 'bg-danger';
+        } else {
+            return 'bg-muted';
+        }
+    },
+
+
     generateRubyHtml: function() {
         // console.log('children:', this.props.children);
         // console.log('text:', this.props.text);
 
         let html = '';
         for (let char of this.props.text) {
-            let pinyin = pronunciation.getPinyin(char);
+            let pinyin = charData.getPinyin(char);
+            let freqRank = charData.getFreqRank(char);
+            let bgColorClassName = this.computeBgColorClassName(freqRank);
+
             // TODO: replace this with DOM or proper escaping.
-            html += '<ruby class="text-primary">'
+            html += '<ruby class="' + bgColorClassName + '">'
                 + char
                 + '<rp>(</rp><rt class="text-success">'
                 + pinyin.toLowerCase()
