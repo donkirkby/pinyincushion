@@ -8,6 +8,23 @@ import charData from './charData';
 import './PinyinCushionEditor.css';
 
 
+class FreqRankLegend extends React.Component {
+    render() {
+        return (
+                <div className="freq-rank-legend col-md-offset-4">
+                Top: &nbsp;
+                <span className="bg-primary">100</span>
+                <span className="bg-success">200</span>
+                <span className="bg-info">5000</span>
+                <span className="bg-warning">2000</span>
+                <span className="bg-danger">5000</span>
+                </div>
+        );
+    }
+
+}
+
+
 const DisplayBox = React.createClass({
     computeBgColorClassName: function(freqRank) {
         if (freqRank <= 100) {
@@ -56,11 +73,11 @@ const DisplayBox = React.createClass({
         // TODO: replace this with DOM or proper escaping.
         return (
                 <div className="display-box">
-                <h3>Display</h3>
-                <div
-            id="display"
-            dangerouslySetInnerHTML={this.generateRubyHtml()}
+                <h3 className="display-header">Display</h3>
+                <div className="display"
+                     dangerouslySetInnerHTML={this.generateRubyHtml()}
                 />
+                <FreqRankLegend />
                 </div>
         );
     }
