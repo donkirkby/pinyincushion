@@ -16,7 +16,7 @@ fs.readFile('cedict.script', {encoding: 'utf-8'}, function(err, data){
             }
             if (result[2].length == 1) {
                 if ( ! characters.has(result[2])) {
-                    line += '"' + result[2] + '":"' + result[3] + '",';
+                    line += '"' + result[2] + '":"' + result[3].toLowerCase() + '",';
                     characters.add(result[2]);
                     if (characters.size % 6 === 0) {
                         console.log(line);
