@@ -10,6 +10,7 @@ it('converts pinyin tone numbers to accents', () => {
     expect(charData.convertPinyin('nu:3')).toEqual('nǚ');
     expect(charData.convertPinyin('ma')).toEqual('ma');
     expect(charData.convertPinyin('ma0')).toEqual('ma');
+    expect(charData.convertPinyin('liu2')).toEqual('liú');
     expect(charData.convertPinyin('')).toEqual('');
 });
 
