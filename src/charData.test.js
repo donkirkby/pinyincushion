@@ -11,9 +11,9 @@ it('converts pinyin tone numbers to accents', () => {
         {input: 'nu:3', output: 'nǚ'},
         {input: 'ma', output: 'ma'},
         {input: 'ma0', output: 'ma'},
-        {input: '', output: ''}
+        {input: '', output: ''},
 
-        {input: 'liu2', output: 'liú'},
+        {input: 'liu2', output: 'liú'}
     ]
     testData.forEach((currentValue, index, array) => {
         expect(charData.convertPinyin(currentValue.input))
