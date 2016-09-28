@@ -8,7 +8,7 @@ var charData = {
         if (props === undefined) {
             return "";
         } else {
-            return props.pinyin;
+            return charData.convertPinyin(props.pinyin);
         }
     },
 
@@ -20,6 +20,32 @@ var charData = {
         } else {
             return props.freqRank;
         }
+    },
+    
+    convertPinyin: function(pinyin) {
+        var toneMatch = pinyin.match(/^(.*)(\d+)$/)
+        if (toneMatch === null) {
+            return pinyin;
+        }
+        var tone = parseInt(toneMatch[2]),
+            vowels = ['a', 'e', 'i', 'o', 'v', 'u:', 'u'],
+            accents = 'āáăàēéěèīíǐìōóǒòǖǘǚǜǖǘǚǜūúǔù';
+        pinyin = toneMatch[1];
+        
+        for (var vowelIndex in vowels) {
+            var vowel = vowels[vowelIndex];
+            var i = pinyin.indexOf(vowel);
+            if (i > -1) {
+                var prefix = pinyin.substring(0, i),
+                    suffix = pinyin.substring(i+vowel.length),
+                    accent = accents[vowelIndex*4 + tone - 1];
+                if (tone === 0) {
+                    accent = vowel;
+                }
+                return prefix + accent + suffix;
+            }
+        }
+        return tone;
     }
 };
 
