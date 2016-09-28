@@ -1,17 +1,24 @@
 import charData from './charData';
 
 it('converts pinyin tone numbers to accents', () => {
-    expect(charData.convertPinyin('ni3')).toEqual('nǐ');
-    expect(charData.convertPinyin('li4')).toEqual('lì');
-    expect(charData.convertPinyin('liu4')).toEqual('lìu');
-    expect(charData.convertPinyin('hua1')).toEqual('huā');
-    expect(charData.convertPinyin('nu3')).toEqual('nǔ');
-    expect(charData.convertPinyin('nv3')).toEqual('nǚ');
-    expect(charData.convertPinyin('nu:3')).toEqual('nǚ');
-    expect(charData.convertPinyin('ma')).toEqual('ma');
-    expect(charData.convertPinyin('ma0')).toEqual('ma');
-    expect(charData.convertPinyin('liu2')).toEqual('liú');
-    expect(charData.convertPinyin('')).toEqual('');
+    let testData = [
+        {input: 'ni3', output: 'nǐ'},
+        {input: 'li4', output: 'lì'},
+        {input: 'liu4', output: 'lìu'},
+        {input: 'hua1', output: 'huā'},
+        {input: 'nu3', output: 'nǔ'},
+        {input: 'nv3', output: 'nǚ'},
+        {input: 'nu:3', output: 'nǚ'},
+        {input: 'ma', output: 'ma'},
+        {input: 'ma0', output: 'ma'},
+        {input: '', output: ''}
+
+        {input: 'liu2', output: 'liú'},
+    ]
+    testData.forEach((currentValue, index, array) => {
+        expect(charData.convertPinyin(currentValue.input))
+            .toEqual(currentValue.output);
+    })
 });
 
 it('looks up pronunciation for characters', () => {
