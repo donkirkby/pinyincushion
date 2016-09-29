@@ -1,3 +1,5 @@
+import punycode from 'punycode';
+
 // parsed from https://sourceforge.net/p/zdt/svn/HEAD/tree/tags/0.7.0b3/net.sourceforge.zdt.cedict/cedict.script
 import chars from './charData.json';
 
@@ -50,12 +52,13 @@ var charData = {
     },
     
     splitChars: function(text) {
-        var chars = [],
+        var decoded = punycode.ucs2.decode(text),
+            chars = [],
             c,
             pinyinStartIndex;
         
-        for (var i = 0; i < text.length; i++) {
-            c = text[i];
+        for (var i = 0; i < decoded.length; i++) {
+            c = punycode.ucs2.encode(decoded.slice(i, i+1));
             if (pinyinStartIndex === undefined) {
                 if (c === '{' && i > 0) {
                     pinyinStartIndex = i+1;
@@ -66,13 +69,13 @@ var charData = {
             }
             else if (c === '}') {
                 chars[chars.length-1].p = charData.convertTone(
-                        text.substring(pinyinStartIndex, i));
+                        punycode.ucs2.encode(decoded.slice(pinyinStartIndex, i)));
                 pinyinStartIndex = undefined;
             }
         }
         if (pinyinStartIndex !== undefined) {
             chars[chars.length-1].p = charData.convertTone(
-                    text.substring(pinyinStartIndex));
+                    punycode.ucs2.encode(decoded.slice(pinyinStartIndex)));
         }
         return chars;
     }

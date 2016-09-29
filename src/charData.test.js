@@ -43,3 +43,7 @@ it('splits text into characters with pinyin override', () => {
              {c: '}', p: ''},
              {c: '去', p: 'qù'}]);
 });
+it('handles Unicode code pairs', () => {
+    // See: https://github.com/bestiejs/punycode.js/#punycodeucs2
+    expect(charData.splitChars('𠮷')).toEqual([{c: '𠮷', p:''}]);
+});
