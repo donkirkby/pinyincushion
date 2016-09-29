@@ -48,21 +48,21 @@ const DisplayBox = React.createClass({
         // console.log('text:', this.props.text);
 
         let html = '';
-        for (let char of this.props.text) {
-            let pinyin = charData.getPinyin(char);
-            let freqRank = charData.getFreqRank(char);
+        let chars = charData.splitChars(this.props.text);
+        for (let char of chars) {
+            let freqRank = charData.getFreqRank(char.c);
             let bgColorClassName = this.computeBgColorClassName(freqRank);
 
-            if (char === ' ') {
+            if (char.c === ' ') {
                 html += '&nbsp;';
-            } else if (char === '\n') {
+            } else if (char.c === '\n') {
                 html += '<br>';
             } else {
                 // TODO: replace this with DOM or proper escaping.
                 html += '<ruby class="' + bgColorClassName + '">'
-                    + char
+                    + char.c
                     + '<rp>(</rp><rt class="text-success">'
-                    + pinyin.toLowerCase()
+                    + char.p.toLowerCase()
                     + '</rt><rp>)</rp></ruby>';
             }
         }

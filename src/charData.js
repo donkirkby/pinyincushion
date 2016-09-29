@@ -8,7 +8,7 @@ var charData = {
         if (props === undefined) {
             return "";
         } else {
-            return charData.convertPinyin(props.pinyin);
+            return charData.convertTone(props.pinyin);
         }
     },
 
@@ -22,14 +22,15 @@ var charData = {
         }
     },
     
-    convertPinyin: function(pinyin) {
+    /** Convert pinyin tone number to tone mark on a single syllable. */
+    convertTone: function(pinyin) {
         var toneMatch = pinyin.match(/^(.*)(\d+)$/)
         if (toneMatch === null) {
             return pinyin;
         }
         var tone = parseInt(toneMatch[2]),
             vowels = ['a', 'e', 'i', 'o', 'v', 'u:', 'u'],
-            accents = 'āáăàēéěèīíǐìōóǒòǖǘǚǜǖǘǚǜūúǔù';
+            accents = 'āáǎàēéěèīíǐìōóǒòǖǘǚǜǖǘǚǜūúǔù';
         pinyin = toneMatch[1];
         
         for (var vowelIndex in vowels) {
@@ -46,6 +47,34 @@ var charData = {
             }
         }
         return tone;
+    },
+    
+    splitChars: function(text) {
+        var chars = [],
+            c,
+            pinyinStartIndex;
+        
+        for (var i = 0; i < text.length; i++) {
+            c = text[i];
+            if (pinyinStartIndex === undefined) {
+                if (c === '{' && i > 0) {
+                    pinyinStartIndex = i+1;
+                }
+                else {
+                    chars.push({c: c, p:charData.getPinyin(c)});
+                }
+            }
+            else if (c === '}') {
+                chars[chars.length-1].p = charData.convertTone(
+                        text.substring(pinyinStartIndex, i));
+                pinyinStartIndex = undefined;
+            }
+        }
+        if (pinyinStartIndex !== undefined) {
+            chars[chars.length-1].p = charData.convertTone(
+                    text.substring(pinyinStartIndex));
+        }
+        return chars;
     }
 };
 
