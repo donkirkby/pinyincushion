@@ -1,15 +1,2 @@
 @media print {
-    .freq-rank-legend {
-        position: fixed;
-        bottom: 0;
-        vertical-align: bottom;
-        display: inline-block;
-    }
-
-    .freq-rank-legend span {
-        width: 50px;
-        text-align: center;
-        display: inline-block;
-    }
-
 }
