@@ -1,2 +1,5 @@
 @media print {
+    body {
+        font-size: 18pt;
+    }
 }

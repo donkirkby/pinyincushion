@@ -14,8 +14,8 @@ class FreqRankLegend extends React.Component {
                 <span className="bg-primary">100</span>
                 <span className="bg-success">200</span>
                 <span className="bg-info">500</span>
-                <span className="bg-warning">2000</span>
-                <span className="bg-danger">5000</span>
+                <span className="bg-warning">1000</span>
+                <span className="bg-danger">10000</span>
                 </div>
         );
     }
@@ -31,9 +31,9 @@ const DisplayBox = React.createClass({
             return 'bg-success';
         } else if (freqRank <= 500) {
             return 'bg-info';
-        } else if (freqRank <= 2000) {
+        } else if (freqRank <= 1000) {
             return 'bg-warning';
-        } else if (freqRank <= 5000) {
+        } else if (freqRank <= 10000) {
             return 'bg-danger';
         } else {
             return 'bg-muted';
