@@ -9,7 +9,7 @@ import charData from './charData';
 class FreqRankLegend extends React.Component {
     render() {
         return (
-                <div className="freq-rank-legend col-md-offset-4">
+                <div className="freq-rank-legend col-md-offset-4 hidden-print">
                 Top: &nbsp;
                 <span className="bg-primary">100</span>
                 <span className="bg-success">200</span>
