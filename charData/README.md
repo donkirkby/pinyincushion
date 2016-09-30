@@ -10,3 +10,6 @@ NOTE: Tried Google Translate, but it is buggy. e.g.
 瞭       12167  17      了
 暸         772  16      了
 ```
+
+A `charData.json` file will be generated after running `convert_to_json.py`, and
+it's mannually moved to `pinyincushion/src` for use.
