@@ -13,6 +13,7 @@ var frequencies = fs.readFileSync('sorted.txt', {encoding: 'utf-8'}),
     result,
     topCharacters = [],
     manualOverrides = {
+        '子': 'zi5',
         '去': 'qu4',
         '結': 'jie2'
     };

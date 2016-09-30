@@ -41,6 +41,9 @@ jspm_packages
 /charData/sorted.txt
 /charData/phrases.bg5
 
+# Generated files
+/charData/chars.json
+
 node_modules
 
 /build/
