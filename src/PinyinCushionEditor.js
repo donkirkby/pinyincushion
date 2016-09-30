@@ -5,8 +5,6 @@ import punycode from 'punycode';
 
 import charData from './charData';
 
-import './PinyinCushionEditor.css';
-
 
 class FreqRankLegend extends React.Component {
     render() {
@@ -73,7 +71,7 @@ const DisplayBox = React.createClass({
         // TODO: replace this with DOM or proper escaping.
         return (
                 <div className="display-box">
-                <h3 className="display-header">Display</h3>
+                <h3 className="display-header hidden-print">Display</h3>
                 <div className="display"
                      dangerouslySetInnerHTML={this.generateRubyHtml()}
                 />
@@ -92,7 +90,7 @@ const FeedbackBox = React.createClass({
 
     render: function() {
         return (
-                <div className="feedback-box">
+                <div className="feedback-box hidden-print">
                 <h3>Feedback</h3>
                 <CharacterFrequencyList text={this.props.text} />
                 <div>Entered {this.computeNumberOfCharacters()} Characters.</div>
@@ -174,7 +172,7 @@ const PinyinCushionEditor = React.createClass({
     render: function() {
         return (
                 <div className="pinyin-cushion-editor">
-                <div className="left-container col-md-4">
+                <div className="left-container col-md-4 hidden-print">
                 <InputBox handleChange={this.handleChange} />
                 </div>
 
