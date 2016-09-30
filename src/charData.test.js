@@ -11,6 +11,7 @@ it('converts pinyin tone numbers to accents', () => {
         {input: 'nu:3', output: 'nǚ'},
         {input: 'ma', output: 'ma'},
         {input: 'ma0', output: 'ma'},
+        {input: 'ma5', output: 'ma'},
         {input: '', output: ''},
 
         //TODO: {input: 'liu2', output: 'liú'}

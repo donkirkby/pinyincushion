@@ -42,7 +42,7 @@ var charData = {
                 var prefix = pinyin.substring(0, i),
                     suffix = pinyin.substring(i+vowel.length),
                     accent = accents[vowelIndex*4 + tone - 1];
-                if (tone === 0) {
+                if (tone === 0 || tone === 5) {
                     accent = vowel;
                 }
                 return prefix + accent + suffix;

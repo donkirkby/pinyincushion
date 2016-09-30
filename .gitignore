@@ -35,7 +35,11 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
-/cedict.script
+
+# Downloaded source files
+/charData/cedict.script
+/charData/sorted.txt
+/charData/phrases.bg5
 
 node_modules
 

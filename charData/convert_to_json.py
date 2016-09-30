@@ -1,10 +1,11 @@
+import codecs
 import json
 
 
-with open('chars.json') as inf:
+with codecs.open('chars.json', 'r', 'utf8') as inf:
     pinyin = json.loads(inf.read())
 
-with open('char_freq.txt') as inf:
+with codecs.open('char_freq.txt', 'r', 'utf8') as inf:
     char_freq = {}
     for k, line in enumerate(inf):
         traditional, frequency, num_strokes, simplified = line.split()
@@ -25,3 +26,5 @@ with open('char_freq.txt') as inf:
 
 with open('charData.json', 'wt') as opf:
     json.dump(char_freq, opf)
+
+print('Done.')

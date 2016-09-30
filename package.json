@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "0.6.0"
+    "react-scripts": "0.6.0",
+    "iconv-lite": "0.4.13"
   },
   "dependencies": {
     "punycode": "^1.4.1",
