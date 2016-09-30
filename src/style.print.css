@@ -1,42 +1,4 @@
 @media print {
-    /*
-http://stackoverflow.com/questions/29563548/print-html-table-background-color-with-bootstrap
->Bootstrap explicitly sets the background to white for printing--this is in
-their CSS: */
-
-    body {
-        /* https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-print-color-adjust
-non-standard, also see
-http://stackoverflow.com/questions/14987496/background-color-not-showing-in-print-preview
-       */
-        -webkit-print-color-adjust: exact;
-    }
-
-    /* .display-box .display { */
-    /*     font-size: 250%; */
-    /* } */
-
-    .bg-primary {
-        color: #fff;
-        background-color: #337ab7 !important;
-    }
-    
-    .bg-success {
-        background-color: #dff0d8 !important;
-    }
-
-    .bg-info {
-        background-color: #d9edf7 !important;
-    }
-
-    .bg-warning {
-        background-color: #fcf8e3 !important;
-    }
-
-    .bg-danger {
-        background-color: #f2dede !important;
-    }
-
     .freq-rank-legend {
         position: fixed;
         bottom: 0;
