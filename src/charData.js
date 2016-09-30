@@ -32,22 +32,38 @@ var charData = {
         }
         var tone = parseInt(toneMatch[2]),
             vowels = ['a', 'e', 'i', 'o', 'v', 'u:', 'u'],
-            accents = 'āáǎàēéěèīíǐìōóǒòǖǘǚǜǖǘǚǜūúǔù';
+            accents = 'āáǎàēéěèīíǐìōóǒòǖǘǚǜǖǘǚǜūúǔù',
+            bestVowelIndex,
+            bestVowel;
         pinyin = toneMatch[1];
         
         for (var vowelIndex in vowels) {
-            var vowel = vowels[vowelIndex];
-            var i = pinyin.indexOf(vowel);
+            var vowel = vowels[vowelIndex],
+                i = pinyin.indexOf(vowel);
             if (i > -1) {
-                var prefix = pinyin.substring(0, i),
-                    suffix = pinyin.substring(i+vowel.length),
-                    accent = accents[vowelIndex*4 + tone - 1];
-                if (tone === 0 || tone === 5) {
-                    accent = vowel;
+                if (bestVowelIndex === undefined ||
+                        (i > bestVowelIndex && bestVowel > 'e')) {
+                    bestVowelIndex = i;
+                    bestVowel = vowel;
                 }
-                return prefix + accent + suffix;
             }
         }
+        // special case for "ou".
+        i = pinyin.indexOf("ou");
+        if (i > -1) {
+            bestVowelIndex = i;
+            bestVowel = "o";
+        }
+        if (bestVowel !== undefined) {
+            var prefix = pinyin.substring(0, bestVowelIndex),
+                suffix = pinyin.substring(bestVowelIndex + bestVowel.length),
+                accent = accents[vowels.indexOf(bestVowel)*4 + tone - 1];
+            if (tone === 0 || tone === 5) {
+                accent = bestVowel;
+            }
+            return prefix + accent + suffix;
+        }
+
         return tone;
     },
     

@@ -3,18 +3,23 @@ import charData from './charData';
 it('converts pinyin tone numbers to accents', () => {
     let testData = [
         {input: 'ni3', output: 'nǐ'},
+        {input: 'nin3', output: 'nǐn'},
         {input: 'li4', output: 'lì'},
-        {input: 'liu4', output: 'lìu'},
-        {input: 'hua1', output: 'huā'},
-        {input: 'nu3', output: 'nǔ'},
+        {input: 'hua1', output: 'huā'}, // a always takes tone
+        {input: 'pao3', output: 'pǎo'},
+        {input: 'que4', output: 'què'}, // e always takes tone
+        {input: 'lei4', output: 'lèi'},
+        {input: 'shou3', output: 'shǒu'}, // special case for ou
+        {input: 'liu4', output: 'liù'}, // everything else is final vowel
+        {input: 'tui1', output: 'tuī'},
+        {input: 'qiong2', output: 'qióng'},
+        {input: 'nu3', output: 'nǔ'}, // different kinds of u
         {input: 'nv3', output: 'nǚ'},
         {input: 'nu:3', output: 'nǚ'},
-        {input: 'ma', output: 'ma'},
+        {input: 'ma', output: 'ma'}, // different ways to mark neutral tone
         {input: 'ma0', output: 'ma'},
         {input: 'ma5', output: 'ma'},
-        {input: '', output: ''},
-
-        //TODO: {input: 'liu2', output: 'liú'}
+        {input: '', output: ''}, // blank
     ]
     testData.forEach((currentValue, index, array) => {
         expect(charData.convertTone(currentValue.input))

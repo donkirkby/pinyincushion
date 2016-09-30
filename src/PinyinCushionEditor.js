@@ -82,67 +82,6 @@ const DisplayBox = React.createClass({
 });
 
 
-const FeedbackBox = React.createClass({
-    computeNumberOfCharacters: function() {
-        // http://speakingjs.com/es5/ch24.html
-        return punycode.ucs2.decode(this.props.text).length;
-    },
-
-    render: function() {
-        return (
-                <div className="feedback-box hidden-print">
-                <h3>Feedback</h3>
-                <CharacterFrequencyList text={this.props.text} />
-                <div>Entered {this.computeNumberOfCharacters()} Characters.</div>
-                </div>
-        );
-    }
-});
-
-
-const CharacterFrequency = React.createClass({
-    render: function() {
-        return (
-                <div className="character-frequency col-md-1">
-                <span className="text-primary">{this.props.character}</span>:&nbsp;
-                <span className="text-success">{this.props.frequency}</span>
-                </div>
-        );
-    }
-});
-
-
-const CharacterFrequencyList = React.createClass({
-    computeCharacterFrequency: function() {
-        let counts = {};
-        for (let char of this.props.text) {
-            counts[char] = counts[char] ? counts[char]+1 : 1;
-        }
-        return counts;
-    },
-
-    render: function() {
-        let counts = this.computeCharacterFrequency();
-        let charFreqList = Object.keys(counts).map(
-            x => ({char: x, count: counts[x]})
-        );
-
-        // reversed order
-        let charFreqListSorted = charFreqList.sort((a, b) => b.count - a.count);
-
-        let charFreqListNode = charFreqListSorted.map(item => (
-                <CharacterFrequency key={item.char} character={item.char} frequency={item.count} />
-        ));
-
-        return (
-                <div className="character-frequency-list">
-                {charFreqListNode}
-            </div>
-        );
-    }
-});
-
-
 const InputBox = React.createClass({
     render: function() {
         return (
@@ -178,7 +117,6 @@ const PinyinCushionEditor = React.createClass({
 
                 <div className="right-container col-md-8">
                 <DisplayBox text={this.state.value} />
-                <FeedbackBox text={this.state.value} />
                 </div>
                 </div>
         );
