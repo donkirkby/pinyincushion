@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PinyinCushionEditor from './PinyinCushionEditor';
-import './index.css';
+import './style.screen.css';
+
 
 ReactDOM.render(
         <PinyinCushionEditor />,
