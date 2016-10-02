@@ -7,6 +7,7 @@
     "iconv-lite": "0.4.13"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "punycode": "^1.4.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2"
