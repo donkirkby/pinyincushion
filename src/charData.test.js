@@ -10,6 +10,7 @@ it('converts pinyin tone numbers to accents', () => {
         {input: 'que4', output: 'què'}, // e always takes tone
         {input: 'lei4', output: 'lèi'},
         {input: 'shou3', output: 'shǒu'}, // special case for ou
+        {input: 'liu2', output: 'liú'},   // a case mannually identified for 流
         {input: 'liu4', output: 'liù'}, // everything else is final vowel
         {input: 'tui1', output: 'tuī'},
         {input: 'qiong2', output: 'qióng'},
