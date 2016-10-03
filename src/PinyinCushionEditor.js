@@ -14,7 +14,7 @@ class FreqRankLegend extends React.Component {
                 <span className="bg-success">200</span>
                 <span className="bg-info">500</span>
                 <span className="bg-warning">1000</span>
-                <span className="bg-danger">10000</span>
+                <span className="bg-danger">5000</span>
                 </div>
         );
     }
@@ -32,7 +32,7 @@ const DisplayBox = React.createClass({
             return 'bg-info';
         } else if (freqRank <= 1000) {
             return 'bg-warning';
-        } else if (freqRank <= 10000) {
+        } else if (freqRank <= 5000) {
             return 'bg-danger';
         } else {
             return 'bg-muted';
@@ -40,41 +40,35 @@ const DisplayBox = React.createClass({
     },
 
 
-    generateRubyHtml: function() {
-        // console.log('children:', this.props.children);
-        // console.log('text:', this.props.text);
-
-        let html = '';
-        let chars = charData.splitChars(this.props.text);
-        for (let char of chars) {
-            let freqRank = charData.getFreqRank(char.c);
-            let bgColorClassName = this.computeBgColorClassName(freqRank);
-
-            if (char.c === ' ') {
-                html += '&nbsp;';
-            } else if (char.c === '\n') {
-                html += '<br>';
-            } else {
-                // TODO: replace this with DOM or proper escaping.
-                html += '<ruby class="' + bgColorClassName + '">'
-                    + char.c
-                    + '<rp>(</rp><rt class="text-success">'
-                    + char.p.toLowerCase()
-                    + '</rt><rp>)</rp></ruby>';
-            }
-        }
-        return { __html: html};
-    },
-
     render: function() {
-        // TODO: replace this with DOM or proper escaping.
+        var displayBox = this,
+            key = 0,
+            chars = charData.splitChars(this.props.text);
         return (
                 <div className="display-box">
-                <h3 className="display-header hidden-print">Display</h3>
-                <div className="display"
-                     dangerouslySetInnerHTML={this.generateRubyHtml()}
-                />
-                <FreqRankLegend />
+                    <h3 className="display-header hidden-print">Display</h3>
+                    <div className="display">
+                        {chars.map(function(char) {
+                            var freqRank = charData.getFreqRank(char.c),
+                                bgColorClassName = displayBox.computeBgColorClassName(
+                                        freqRank);
+                            key += 1;
+                            
+                            if (char.c === ' ') {
+                                return <span key={key}>&nbsp;</span>;
+                            }
+                            if (char.c === '\n') {
+                                return <br key={key}/>;
+                            }
+                            return <ruby key={key} className={bgColorClassName}>
+                                    {char.c}
+                                    <rp>(</rp>
+                                    <rt className="text-success">{char.p}</rt>
+                                    <rp>)</rp>
+                                </ruby>;
+                        })}
+                    </div>
+                    <FreqRankLegend />
                 </div>
         );
     }
