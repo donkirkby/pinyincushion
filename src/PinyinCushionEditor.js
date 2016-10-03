@@ -99,15 +99,31 @@ const InputBox = React.createClass({
 
 const PinyinCushionEditor = React.createClass({
     getInitialState: function() {
+        var canSave = this.localStorageAvailable(),
+            text = canSave ? window.localStorage.text : '你好';
         return {
-            value: window.localStorage.text,
+            value: text,
+            canSave: canSave,
             willSave: false
         };
+    },
+    
+    localStorageAvailable: function() {
+        try {
+            var storage = window.localStorage,
+                x = '__storage_test__';
+            storage.setItem(x, x);
+            storage.removeItem(x);
+            return true;
+        }
+        catch(e) {
+            return false;
+        }
     },
 
     handleChange: function(event) {
         this.setState({value: event.target.value});
-        if ( ! this.state.willSave) {
+        if ( this.state.canSave && ! this.state.willSave) {
             window.setTimeout(this.saveBackup, 10000);
             this.setState({willSave: true});
         }
