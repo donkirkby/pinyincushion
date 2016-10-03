@@ -100,7 +100,10 @@ const InputBox = React.createClass({
 const PinyinCushionEditor = React.createClass({
     getInitialState: function() {
         var canSave = this.localStorageAvailable(),
-            text = canSave ? window.localStorage.text : '你好';
+            text = canSave ? window.localStorage.text : undefined;
+        if (text === undefined) {
+            text = '你好';
+        }
         return {
             value: text,
             canSave: canSave,
