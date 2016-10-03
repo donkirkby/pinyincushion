@@ -30,14 +30,14 @@ var charData = {
         if (toneMatch === null) {
             return pinyin;
         }
-        var tone = parseInt(toneMatch[2]),
+        var tone = parseInt(toneMatch[2], 10),
             vowels = ['a', 'e', 'i', 'o', 'v', 'u:', 'u'],
             accents = 'āáǎàēéěèīíǐìōóǒòǖǘǚǜǖǘǚǜūúǔù',
             bestVowelIndex,
             bestVowel;
         pinyin = toneMatch[1];
         
-        for (var vowelIndex in vowels) {
+        for (var vowelIndex = 0; vowelIndex < vowels.length; vowelIndex++) {
             var vowel = vowels[vowelIndex],
                 i = pinyin.indexOf(vowel);
             if (i > -1) {

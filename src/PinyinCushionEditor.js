@@ -1,5 +1,4 @@
 import React from 'react';
-import punycode from 'punycode';
 
 // import logo from './logo.svg';
 
@@ -86,11 +85,12 @@ const InputBox = React.createClass({
     render: function() {
         return (
                 <div className="input-box">
-                <h3>Input</h3>
+                <h3>Input{this.props.willSave ? '*' : ''}</h3>
                 <textarea
-            className="form-control"
-            onChange={this.props.handleChange}
-            placeholder="Type Chinese here to get instant feedback" />
+                    className="form-control"
+                    onChange={this.props.handleChange}
+                    placeholder="Type Chinese here to get instant feedback"
+                    value={this.props.text} />
                 </div>
         );
     }
@@ -100,19 +100,32 @@ const InputBox = React.createClass({
 const PinyinCushionEditor = React.createClass({
     getInitialState: function() {
         return {
-            value: '你好'
+            value: window.localStorage.text,
+            willSave: false
         };
     },
 
     handleChange: function(event) {
         this.setState({value: event.target.value});
+        if ( ! this.state.willSave) {
+            window.setTimeout(this.saveBackup, 10000);
+            this.setState({willSave: true});
+        }
+    },
+    
+    saveBackup: function() {
+        window.localStorage.text = this.state.value;
+        this.setState({willSave: false});
     },
 
     render: function() {
         return (
                 <div className="pinyin-cushion-editor">
                 <div className="left-container col-md-4 hidden-print">
-                <InputBox handleChange={this.handleChange} />
+                <InputBox
+                    handleChange={this.handleChange}
+                    text={this.state.value}
+                    willSave={this.state.willSave}/>
                 </div>
 
                 <div className="right-container col-md-8">
