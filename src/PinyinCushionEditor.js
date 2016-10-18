@@ -62,9 +62,6 @@ const PinyinCushionEditor = React.createClass({
     getInitialState: function() {
         var canSave = this.localStorageAvailable(),
             text = canSave ? window.localStorage.text : undefined;
-        if (text === undefined) {
-            text = '你好';
-        }
 
         const compositeDecorator = new CompositeDecorator([
             {
@@ -136,7 +133,7 @@ const PinyinCushionEditor = React.createClass({
                         <Editor editorState={editorState}
                                 onChange={this.onChange}
                                 ref='editor'
-                                placeholder='abc' />
+                                placeholder='Type some Chinese. 写点中文...' />
                     </div>
                 </div>
 
