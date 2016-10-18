@@ -1,6 +1,5 @@
 import React from 'react';
-
-// import logo from './logo.svg';
+import {Editor, EditorState, ContentState, RichUtils, CompositeDecorator} from 'draft-js';
 
 import charData from './charData';
 
@@ -75,22 +74,6 @@ const DisplayBox = React.createClass({
 });
 
 
-const InputBox = React.createClass({
-    render: function() {
-        return (
-                <div className="input-box">
-                <h3>Input{this.props.willSave ? '*' : ''}</h3>
-                <textarea
-                    className="form-control"
-                    onChange={this.props.handleChange}
-                    placeholder="Type Chinese here to get instant feedback"
-                    value={this.props.text} />
-                </div>
-        );
-    }
-});
-
-
 const PinyinCushionEditor = React.createClass({
     getInitialState: function() {
         var canSave = this.localStorageAvailable(),
@@ -98,13 +81,24 @@ const PinyinCushionEditor = React.createClass({
         if (text === undefined) {
             text = '你好';
         }
+
+        var editorState;
+        if (text !== undefined) {
+            var contentState = ContentState.createFromText(text);
+            editorState = EditorState.createWithContent(contentState);
+        } else {
+            editorState = EditorState.createEmpty();
+        }
+
         return {
             value: text,
             canSave: canSave,
-            willSave: false
+            willSave: false,
+
+            editorState: editorState
         };
     },
-    
+
     localStorageAvailable: function() {
         try {
             var storage = window.localStorage,
@@ -118,12 +112,21 @@ const PinyinCushionEditor = React.createClass({
         }
     },
 
-    handleChange: function(event) {
-        this.setState({value: event.target.value});
+    onChange: function(editorState) {
+        this.setState({editorState: editorState});
+        var content = this.state.editorState.getCurrentContent();
+        var text = content.getPlainText();
+
+        this.setState({value: text});
+
         if ( this.state.canSave && ! this.state.willSave) {
-            window.setTimeout(this.saveBackup, 10000);
+            window.setTimeout(this.saveBackup, 1000);
             this.setState({willSave: true});
         }
+    },
+
+    focus: function() {
+        this.refs.editor.focus();
     },
     
     saveBackup: function() {
@@ -132,19 +135,24 @@ const PinyinCushionEditor = React.createClass({
     },
 
     render: function() {
+        var {editorState, willSave, value} = this.state;
+
         return (
-                <div className="pinyin-cushion-editor">
+            <div className="pinyin-cushion-editor">
                 <div className="left-container col-md-4 hidden-print">
-                <InputBox
-                    handleChange={this.handleChange}
-                    text={this.state.value}
-                    willSave={this.state.willSave}/>
+                    <h3>Input{willSave ? '*' : ''}</h3>
+                    <div className="input-box" onClick={this.focus}>
+                        <Editor editorState={editorState}
+                                onChange={this.onChange}
+                                ref='editor'
+                                placeholder='abc' />
+                    </div>
                 </div>
 
                 <div className="right-container col-md-8">
-                <DisplayBox text={this.state.value} />
+                    <DisplayBox text={value} />
                 </div>
-                </div>
+            </div>
         );
     }
 });
