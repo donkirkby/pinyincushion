@@ -20,8 +20,15 @@
         height: 100%;
     }
 
-    .input-box textarea {
+    .input-box .DraftEditor-root {
         height: 90%;
+
+        /* copied from draftjs examples/rich/RichEditor.css */
+        background: #fff;
+        border: 1px solid #ddd;
+        font-family: 'Georgia', serif;
+        font-size: 30px;
+        padding: 15px;
     }
 
     .freq-rank-legend {
