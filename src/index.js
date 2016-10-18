@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'draft-js/dist/Draft.css';
 
 import PinyinCushionEditor from './PinyinCushionEditor';
 import './style.screen.css';
