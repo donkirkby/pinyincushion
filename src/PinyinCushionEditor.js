@@ -2,6 +2,7 @@ import React from 'react';
 import {Editor, EditorState, ContentState, RichUtils, CompositeDecorator} from 'draft-js';
 
 import charData from './charData';
+import {handleCharStrategy, computeBgColorClassName, HandleCharRuby} from './draftDecorators';
 
 
 class FreqRankLegend extends React.Component {
@@ -22,23 +23,6 @@ class FreqRankLegend extends React.Component {
 
 
 const DisplayBox = React.createClass({
-    computeBgColorClassName: function(freqRank) {
-        if (freqRank <= 100) {
-            return 'bg-primary';
-        } else if (freqRank <= 200) {
-            return 'bg-success';
-        } else if (freqRank <= 500) {
-            return 'bg-info';
-        } else if (freqRank <= 1000) {
-            return 'bg-warning';
-        } else if (freqRank <= 5000) {
-            return 'bg-danger';
-        } else {
-            return 'bg-muted';
-        }
-    },
-
-
     render: function() {
         var displayBox = this,
             key = 0,
@@ -49,7 +33,7 @@ const DisplayBox = React.createClass({
                     <div className="display">
                         {chars.map(function(char) {
                             var freqRank = charData.getFreqRank(char.c),
-                                bgColorClassName = displayBox.computeBgColorClassName(
+                                bgColorClassName = computeBgColorClassName(
                                         freqRank);
                             key += 1;
                             
@@ -82,12 +66,19 @@ const PinyinCushionEditor = React.createClass({
             text = '你好';
         }
 
+        const compositeDecorator = new CompositeDecorator([
+            {
+                strategy: handleCharStrategy,
+                component: HandleCharRuby
+            },
+        ]);
+
         var editorState;
         if (text !== undefined) {
             var contentState = ContentState.createFromText(text);
-            editorState = EditorState.createWithContent(contentState);
+            editorState = EditorState.createWithContent(contentState, compositeDecorator);
         } else {
-            editorState = EditorState.createEmpty();
+            editorState = EditorState.createEmpty(compositeDecorator);
         }
 
         return {
