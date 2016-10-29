@@ -1,8 +1,8 @@
 import React from 'react';
-import {Editor, EditorState, ContentState, RichUtils, CompositeDecorator} from 'draft-js';
+import {Editor, EditorState, ContentState, CompositeDecorator} from 'draft-js';
 
 import charData from './charData';
-import {handleCharStrategy, computeBgColorClassName, HandleCharRuby} from './draftDecorators';
+import {handleCharStrategy, HandleCharRuby} from './draftDecorators';
 
 
 class FreqRankLegend extends React.Component {
@@ -24,17 +24,13 @@ class FreqRankLegend extends React.Component {
 
 const DisplayBox = React.createClass({
     render: function() {
-        var displayBox = this,
-            key = 0,
+        var key = 0,
             chars = charData.splitChars(this.props.text);
         return (
                 <div className="display-box">
                     <h3 className="display-header hidden-print">Display</h3>
                     <div className="display">
                         {chars.map(function(char) {
-                            var freqRank = charData.getFreqRank(char.c),
-                                bgColorClassName = computeBgColorClassName(
-                                        freqRank);
                             key += 1;
                             
                             if (char.c === ' ') {
@@ -43,7 +39,7 @@ const DisplayBox = React.createClass({
                             if (char.c === '\n') {
                                 return <br key={key}/>;
                             }
-                            return <ruby key={key} className={bgColorClassName}>
+                            return <ruby key={key}>
                                     {char.c}
                                     <rp>(</rp>
                                     <rt className="text-success">{char.p}</rt>
@@ -104,6 +100,7 @@ const PinyinCushionEditor = React.createClass({
         this.setState({editorState: editorState});
         var content = this.state.editorState.getCurrentContent();
         var text = content.getPlainText();
+        console.log(text);
 
         this.setState({value: text});
 
