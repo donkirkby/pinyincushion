@@ -98,9 +98,8 @@ const PinyinCushionEditor = React.createClass({
 
     onChange: function(editorState) {
         this.setState({editorState: editorState});
-        var content = this.state.editorState.getCurrentContent();
+        var content = editorState.getCurrentContent();
         var text = content.getPlainText();
-        console.log(text);
 
         this.setState({value: text});
 
