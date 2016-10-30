@@ -2,7 +2,7 @@ import React from 'react';
 import {Editor, EditorState, ContentState, CompositeDecorator} from 'draft-js';
 
 import charData from './charData';
-import {handleCharStrategy, HandleCharRuby} from './draftDecorators';
+import {handleCharStrategy, HandleChar} from './draftDecorators';
 
 
 class FreqRankLegend extends React.Component {
@@ -62,7 +62,7 @@ const PinyinCushionEditor = React.createClass({
         const compositeDecorator = new CompositeDecorator([
             {
                 strategy: handleCharStrategy,
-                component: HandleCharRuby
+                component: HandleChar
             },
         ]);
 

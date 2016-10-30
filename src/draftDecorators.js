@@ -33,7 +33,7 @@ export function handleCharStrategy(contentBlock, callback) {
     findWithRegex(HANDLE_CHAR, contentBlock, callback);
 }
 
-export const HandleCharRuby = (props) => {
+export const HandleChar = (props) => {
     return (
             <span className={computeBgColorClassName(charData.getFreqRank(props.decoratedText))}>
             {props.children}
