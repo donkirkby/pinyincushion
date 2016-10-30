@@ -59,6 +59,10 @@ const PinyinCushionEditor = React.createClass({
         var canSave = this.localStorageAvailable(),
             text = canSave ? window.localStorage.text : undefined;
 
+        /* initalize to empty string instead of undefined, text should always be
+        a string to avoid bug */
+        if (text === undefined) text = '';
+
         const compositeDecorator = new CompositeDecorator([
             {
                 strategy: handleCharStrategy,
@@ -67,12 +71,8 @@ const PinyinCushionEditor = React.createClass({
         ]);
 
         var editorState;
-        if (text !== undefined) {
-            var contentState = ContentState.createFromText(text);
-            editorState = EditorState.createWithContent(contentState, compositeDecorator);
-        } else {
-            editorState = EditorState.createEmpty(compositeDecorator);
-        }
+        var contentState = ContentState.createFromText(text);
+        editorState = EditorState.createWithContent(contentState, compositeDecorator);
 
         return {
             value: text,
