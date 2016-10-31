@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "0.6.0",
-    "iconv-lite": "0.4.13"
+    "iconv-lite": "0.4.13",
+    "react-addons-test-utils": "^15.3.2",
+    "react-scripts": "0.6.0"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
     "draft-js": "^0.9.1",
     "punycode": "^1.4.1",
     "react": "^15.3.2",
-    "react-addons-test-utils": "^15.3.2",
     "react-dom": "^15.3.2"
   },
   "scripts": {
