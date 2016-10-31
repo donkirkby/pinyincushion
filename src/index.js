@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'draft-js/dist/Draft.css';
 
 import PinyinCushionEditor from './PinyinCushionEditor';
-import './style.screen.css';
-import './style.print.css';
+import './static/css/style.screen.css';
+import './static/css/style.print.css';
 
 
 ReactDOM.render(
