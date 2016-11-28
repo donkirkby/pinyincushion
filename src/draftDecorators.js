@@ -20,10 +20,12 @@ export function computeBgColorClassName(freqRank) {
 
 function findWithRegex(regex, contentBlock, callback) {
     const text = contentBlock.getText();
-    let matchArr, start;
-    while ((matchArr = regex.exec(text)) !== null) {
+    let start;
+    let matchArr = regex.exec(text);
+    while (matchArr !== null) {
         start = matchArr.index;
         callback(start, start + matchArr[0].length);
+        matchArr = regex.exec(text);
     }
 }
 
@@ -33,10 +35,12 @@ export function handleCharStrategy(contentBlock, callback) {
     findWithRegex(HANDLE_CHAR, contentBlock, callback);
 }
 
-export const HandleCharRuby = (props) => {
-    return (
-            <span className={computeBgColorClassName(charData.getFreqRank(props.decoratedText))}>
-            {props.children}
-        </span>
-    );
-};
+export class HandleChar extends React.Component {
+    render () {
+        return (
+            <span className={computeBgColorClassName(charData.getFreqRank(this.props.decoratedText))}>
+                {this.props.children}
+            </span>
+        );
+    }
+}

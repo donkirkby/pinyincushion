@@ -2,7 +2,7 @@ import React from 'react';
 import {Editor, EditorState, ContentState, CompositeDecorator} from 'draft-js';
 
 import charData from './charData';
-import {handleCharStrategy, HandleCharRuby} from './draftDecorators';
+import {handleCharStrategy, HandleChar} from './draftDecorators';
 
 
 class FreqRankLegend extends React.Component {
@@ -28,7 +28,7 @@ const DisplayBox = React.createClass({
             chars = charData.splitChars(this.props.text);
         return (
                 <div className="display-box">
-                    <h3 className="display-header hidden-print">With Pinyin</h3>
+                    <h3 className="display-header hidden-print">Display</h3>
                     <div className="display">
                         {chars.map(function(char) {
                             key += 1;
@@ -62,7 +62,7 @@ const PinyinCushionEditor = React.createClass({
         const compositeDecorator = new CompositeDecorator([
             {
                 strategy: handleCharStrategy,
-                component: HandleCharRuby
+                component: HandleChar
             },
         ]);
 
@@ -125,7 +125,7 @@ const PinyinCushionEditor = React.createClass({
         return (
             <div className="pinyin-cushion-editor">
                 <div className="left-container col-md-4 hidden-print">
-                    <h3>Original{willSave ? '*' : ''}</h3>
+                    <h3>Input{willSave ? '*' : ''}</h3>
                     <div className="input-box" onClick={this.focus}>
                         <Editor editorState={editorState}
                                 onChange={this.onChange}
