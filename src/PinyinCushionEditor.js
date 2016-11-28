@@ -28,7 +28,7 @@ const DisplayBox = React.createClass({
             chars = charData.splitChars(this.props.text);
         return (
                 <div className="display-box">
-                    <h3 className="display-header hidden-print">Display</h3>
+                    <h3 className="display-header hidden-print">With Pinyin</h3>
                     <div className="display">
                         {chars.map(function(char) {
                             key += 1;
@@ -40,7 +40,7 @@ const DisplayBox = React.createClass({
                                 return <br key={key}/>;
                             }
                             return <ruby key={key}>
-                                    {char.c}
+                                    <rb>{char.c}</rb>
                                     <rp>(</rp>
                                     <rt className="text-success">{char.p}</rt>
                                     <rp>)</rp>
@@ -67,12 +67,13 @@ const PinyinCushionEditor = React.createClass({
         ]);
 
         var editorState;
-        if (text !== undefined) {
-            var contentState = ContentState.createFromText(text);
-            editorState = EditorState.createWithContent(contentState, compositeDecorator);
-        } else {
-            editorState = EditorState.createEmpty(compositeDecorator);
+        if (text === undefined) {
+            text = "";
         }
+        var contentState = ContentState.createFromText(text),
+            editorState = EditorState.createWithContent(
+                contentState,
+                compositeDecorator);
 
         return {
             value: text,
@@ -124,7 +125,7 @@ const PinyinCushionEditor = React.createClass({
         return (
             <div className="pinyin-cushion-editor">
                 <div className="left-container col-md-4 hidden-print">
-                    <h3>Input{willSave ? '*' : ''}</h3>
+                    <h3>Original{willSave ? '*' : ''}</h3>
                     <div className="input-box" onClick={this.focus}>
                         <Editor editorState={editorState}
                                 onChange={this.onChange}
