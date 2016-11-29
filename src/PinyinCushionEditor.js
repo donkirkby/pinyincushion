@@ -130,7 +130,7 @@ const PinyinCushionEditor = React.createClass({
                         <Editor editorState={editorState}
                                 onChange={this.onChange}
                                 ref='editor'
-                                placeholder='Type some Chinese. 写点中文...' />
+                                placeholder='Type some Chinese. 写点中文吧...' />
                     </div>
                 </div>
 
