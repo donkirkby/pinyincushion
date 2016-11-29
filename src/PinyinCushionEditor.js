@@ -28,7 +28,7 @@ const DisplayBox = React.createClass({
             chars = charData.splitChars(this.props.text);
         return (
                 <div className="display-box">
-                    <h3 className="display-header hidden-print">Display</h3>
+                    <h3 className="display-header hidden-print">Text Display</h3>
                     <div className="display">
                         {chars.map(function(char) {
                             key += 1;
