@@ -20,6 +20,8 @@ npm start
 ```
 
 ## Build
+This will generate the static web site and copy it to the `docs` folder
+that is deployed to the web site when you push to GitHub.
 
 ```
 npm run build
@@ -27,6 +29,6 @@ npm run build
 
 ## Test
 ```
-npm run test
+npm test
 ```
 
