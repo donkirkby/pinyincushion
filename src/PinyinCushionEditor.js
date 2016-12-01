@@ -66,7 +66,6 @@ const PinyinCushionEditor = React.createClass({
             },
         ]);
 
-        var editorState;
         if (text === undefined) {
             text = "";
         }
