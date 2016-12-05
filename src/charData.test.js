@@ -53,3 +53,16 @@ it('handles Unicode code pairs', () => {
     // See: https://github.com/bestiejs/punycode.js/#punycodeucs2
     expect(charData.splitChars('𠮷')).toEqual([{c: '𠮷', p:''}]);
 });
+it("Doesn't highlight low-ranked characters", () => {
+    expect(charData.isRankAbove('人', 200)).toEqual(false);
+});
+it('highlights high-ranked characters', () => {
+    expect(charData.isRankAbove('幾', 200)).toEqual(true);
+});
+it('highlights high-ranked, simplified characters', () => {
+    expect(charData.isRankAbove('几', 200)).toEqual(true);
+});
+it("Doesn't highlight things that aren't Chinese characters", () => {
+    expect(charData.isRankAbove('x', 200)).toEqual(false);
+    expect(charData.isRankAbove('。', 200)).toEqual(false);
+});

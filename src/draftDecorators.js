@@ -2,43 +2,32 @@ import React from 'react';
 import charData from './charData';
 
 
-export function computeBgColorClassName(freqRank) {
-    if (freqRank <= 100) {
-        return 'bg-primary';
-    } else if (freqRank <= 200) {
-        return 'bg-success';
-    } else if (freqRank <= 500) {
-        return 'bg-info';
-    } else if (freqRank <= 1000) {
-        return 'bg-warning';
-    } else if (freqRank <= 5000) {
-        return 'bg-danger';
-    } else {
-        return 'bg-muted';
-    }
-}
-
-function findWithRegex(regex, contentBlock, callback) {
+function findWithRegex(regex, boundary, contentBlock, callback) {
     const text = contentBlock.getText();
     let start;
     let matchArr = regex.exec(text);
     while (matchArr !== null) {
         start = matchArr.index;
-        callback(start, start + matchArr[0].length);
+        if (charData.isRankAbove(matchArr[0], boundary)) {
+            callback(start, start + matchArr[0].length);
+        }
         matchArr = regex.exec(text);
     }
 }
 
 const HANDLE_CHAR = /./g;
 
-export function handleCharStrategy(contentBlock, callback) {
-    findWithRegex(HANDLE_CHAR, contentBlock, callback);
+export function createHandleCharStrategy(boundary) {
+    function handleCharStrategy(contentBlock, callback) {
+        findWithRegex(HANDLE_CHAR, boundary, contentBlock, callback);
+    }
+    return handleCharStrategy;
 }
 
 export class HandleChar extends React.Component {
     render () {
         return (
-            <span className={computeBgColorClassName(charData.getFreqRank(this.props.decoratedText))}>
+            <span className="bg-danger">
                 {this.props.children}
             </span>
         );

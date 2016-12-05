@@ -6,24 +6,30 @@ import chars from './charData.json';
 
 var charData = {
     getPinyin: function(char) {
-        var props = chars[char];
-        if (props === undefined) {
-            return "";
-        } else {
-            return charData.convertTone(props.pinyin);
+        var boundaries = chars.boundaries,
+            pinyin;
+        for (const boundary of boundaries) {
+            pinyin = chars[boundary][char];
+            if (pinyin !== undefined) {
+                return charData.convertTone(pinyin);
+            }
         }
+        return "";
     },
 
-    getFreqRank: function(char) {
-        var props = chars[char];
-        if (props === undefined) {
-            // return any large number to indicate it's a rarely used char
-            return 99999;
-        } else {
-            return props.freqRank;
-        }
+    getRankBoundaries: function() {
+        return chars.boundaries;
     },
-    
+
+    isRankAbove: function(char, boundary) {
+        for (const boundary2 of chars.boundaries) {
+            if (char in chars[boundary2]) {
+                return boundary2 > boundary;
+            }
+        }
+        return false;
+    },
+
     /** Convert pinyin tone number to tone mark on a single syllable. */
     convertTone: function(pinyin) {
         var toneMatch = pinyin.match(/^(.*)(\d+)$/)

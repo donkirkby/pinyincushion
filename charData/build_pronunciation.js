@@ -8,7 +8,9 @@ var fs = require('fs'),
 // http://technology.chtsai.org/charfreq/sorted.html
 // phrases.bg5 is downloaded as phrasesb5.zip from:
 // http://technology.chtsai.org/wordlist/
-var frequencies = fs.readFileSync('sorted.txt', {encoding: 'utf-8'}),
+var rankBoundaries = [200, 500, 1000, 5000],
+    maxRank = rankBoundaries[rankBoundaries.length-1],
+    frequencies = fs.readFileSync('sorted.txt', {encoding: 'utf-8'}),
     freqRegex = /^(\S)\s+\d+\s+\d+$/gm,
     result,
     topCharacters = [],
@@ -18,7 +20,7 @@ var frequencies = fs.readFileSync('sorted.txt', {encoding: 'utf-8'}),
         '結': 'jie2'
     };
 
-while ((result = freqRegex.exec(frequencies)) && topCharacters.length < 10000) {
+while ((result = freqRegex.exec(frequencies)) && topCharacters.length <= maxRank) {
     topCharacters.push(result[1]);
 }
 var phrases = fs.readFileSync('phrases.bg5', {encoding: null}),
@@ -46,9 +48,9 @@ for (c in topPhrases) {
 var pronunciations = fs.readFileSync('cedict.script', {encoding: 'utf-8'});
 var sqlRegex = /^INSERT INTO CHARACTER VALUES\(\d+,'(.*)','(.*)','(.*)','.*'\)$/gm,
     pinyinRegex = /\D+\d/g,
-    pinyinMap = [],  // character -> pinyin
-    pinyinSingles = [],  // character -> pinyin
-    simplified = [],  // traditional -> simplified
+    pinyinMap = {},  // character -> pinyin
+    pinyinSingles = {},  // character -> pinyin
+    simplified = {},  // traditional -> simplified
     pinyinCount = 0,
     line = "";
 while ((result = sqlRegex.exec(pronunciations)) && pinyinCount < topCharacters.length) {
@@ -89,26 +91,23 @@ for (c in pinyinSingles) {
 for (c in manualOverrides) {
     pinyinMap[c] = manualOverrides[c];
 }
-for (c in simplified) {
-    if (pinyinMap[simplified[c]] === undefined) {
-        pinyinMap[simplified[c]] = pinyinMap[c];
+var dump = {"boundaries": rankBoundaries},
+    rank = 0;
+for (var i = 0; i < rankBoundaries.length; i++) {
+    var rankBoundary = rankBoundaries[i],
+        pinyinGroup = {};
+    dump[rankBoundary] = pinyinGroup;
+    while (rank < rankBoundary) {
+        var c = topCharacters[rank],
+            simplifiedC = simplified[c],
+            pinyinC = pinyinMap[c];
+        pinyinGroup[c] = pinyinC;
+        if (simplifiedC !== undefined) {
+            pinyinGroup[simplifiedC] = pinyinC;
+        }
+        rank++;
     }
 }
-pinyinCount = 0;
-console.log('{');
-for (c in pinyinMap) {
-    line += '"' + c + '":"' + pinyinMap[c] + '",';
-    pinyinCount += 1;
-    if (pinyinCount % 6 === 0) {
-        console.log(line);
-        line = "";
-    }
-}
-if (line.length > 0) {
-    console.log(line.substring(0, line.length-1));
-}
-else {
-    console.log('"": ""');
-}
-console.log('}');
-//console.log(pinyinCount);
+
+fs.writeFileSync('../src/charData.json', JSON.stringify(dump), {encoding: 'utf8'});
+console.log('Written to charData.json.');

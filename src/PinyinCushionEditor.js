@@ -2,23 +2,36 @@ import React from 'react';
 import {Editor, EditorState, ContentState, CompositeDecorator} from 'draft-js';
 
 import charData from './charData';
-import {handleCharStrategy, HandleChar} from './draftDecorators';
+import {createHandleCharStrategy, HandleChar} from './draftDecorators';
 
 
 class FreqRankLegend extends React.Component {
-    render() {
-        return (
-                <div className="freq-rank-legend col-md-offset-4 hidden-print">
-                Top: &nbsp;
-                <span className="bg-primary">100</span>
-                <span className="bg-success">200</span>
-                <span className="bg-info">500</span>
-                <span className="bg-warning">1000</span>
-                <span className="bg-danger">5000</span>
-                </div>
-        );
+    constructor(props) {
+        super(props);
+
+        this.handleBoundaryChange = this.handleBoundaryChange.bind(this);
     }
 
+    handleBoundaryChange(event) {
+        this.props.onBoundaryChange(event.target.value);
+    }
+
+    render() {
+        var levels = [];
+        for (const boundary of charData.getRankBoundaries()) {
+            levels.push(<option value={boundary} key={boundary}>{boundary}</option>)
+        }
+        return (
+            <div className="freq-rank-legend col-md-offset-4 hidden-print">
+                Top:
+                <select
+                    value={this.props.boundary}
+                    onChange={this.handleBoundaryChange}>
+                    {levels}
+                </select>
+            </div>
+        );
+    }
 }
 
 
@@ -47,43 +60,41 @@ const DisplayBox = React.createClass({
                                 </ruby>;
                         })}
                     </div>
-                    <FreqRankLegend />
+                    <FreqRankLegend
+                        boundary={this.props.boundary}
+                        onBoundaryChange={this.props.onBoundaryChange} />
                 </div>
         );
     }
 });
 
 
-const PinyinCushionEditor = React.createClass({
-    getInitialState: function() {
-        var canSave = this.localStorageAvailable(),
-            text = canSave ? window.localStorage.text : undefined;
+class PinyinCushionEditor extends React.Component {
+    constructor(props) {
+        super(props);
 
-        const compositeDecorator = new CompositeDecorator([
-            {
-                strategy: handleCharStrategy,
-                component: HandleChar
-            },
-        ]);
+        this.onChange = this.onChange.bind(this);
+        this.handleBoundaryChange = this.handleBoundaryChange.bind(this);
+        this.saveBackup = this.saveBackup.bind(this);
+        this.focus = this.focus.bind(this);
+
+        var canSave = this.localStorageAvailable(),
+            text = canSave ? window.localStorage.text : undefined,
+            defaultBoundary = 1000;
 
         if (text === undefined) {
             text = "";
         }
-        var contentState = ContentState.createFromText(text),
-            editorState = EditorState.createWithContent(
-                contentState,
-                compositeDecorator);
 
-        return {
-            value: text,
+        this.state = {
             canSave: canSave,
             willSave: false,
-
-            editorState: editorState
+            boundary: defaultBoundary,
+            editorState: this.createEditorState(text, defaultBoundary)
         };
-    },
+    }
 
-    localStorageAvailable: function() {
+    localStorageAvailable() {
         try {
             var storage = window.localStorage,
                 x = '__storage_test__';
@@ -94,32 +105,55 @@ const PinyinCushionEditor = React.createClass({
         catch(e) {
             return false;
         }
-    },
+    }
 
-    onChange: function(editorState) {
+    createEditorState(text, boundary) {
+        const compositeDecorator = new CompositeDecorator([
+            {
+                strategy: createHandleCharStrategy(boundary),
+                component: HandleChar
+            },
+        ]);
+        var contentState = ContentState.createFromText(text),
+            editorState = EditorState.createWithContent(
+                contentState,
+                compositeDecorator);
+        return editorState;
+    }
+
+    onChange(editorState) {
         this.setState({editorState: editorState});
-        var content = editorState.getCurrentContent();
-        var text = content.getPlainText();
-
-        this.setState({value: text});
 
         if ( this.state.canSave && ! this.state.willSave) {
             window.setTimeout(this.saveBackup, 1000);
             this.setState({willSave: true});
         }
-    },
+    }
 
-    focus: function() {
+    focus() {
         this.refs.editor.focus();
-    },
+    }
     
-    saveBackup: function() {
-        window.localStorage.text = this.state.value;
+    saveBackup() {
+        var content = this.state.editorState.getCurrentContent();
+        window.localStorage.text = content.getPlainText();
         this.setState({willSave: false});
-    },
+    }
 
-    render: function() {
-        var {editorState, willSave, value} = this.state;
+    handleBoundaryChange(boundary) {
+        this.setState((prevState) => {
+            var content = this.state.editorState.getCurrentContent(),
+                text = content.getPlainText();
+            return {
+                editorState: this.createEditorState(text, boundary),
+                boundary: boundary
+            };
+        });
+    }
+
+    render() {
+        var {editorState, willSave} = this.state;
+        var text = editorState.getCurrentContent().getPlainText();
 
         return (
             <div className="pinyin-cushion-editor">
@@ -134,12 +168,15 @@ const PinyinCushionEditor = React.createClass({
                 </div>
 
                 <div className="right-container col-md-8">
-                    <DisplayBox text={value} />
+                    <DisplayBox
+                        text={text}
+                        boundary={this.state.boundary}
+                        onBoundaryChange={this.handleBoundaryChange} />
                 </div>
             </div>
         );
     }
-});
+}
 
 
 export default PinyinCushionEditor;
